@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.View"
         mc:Ignorable="d"
-        Title="Login" Height="550" Width="800"
+        Title="Login" Height="650" Width="800"
         WindowStyle = "none"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
@@ -125,16 +125,82 @@
                     <Image Source="/Images/logo.png"
                            Width="250"
                            Margin="0,10,0,0"/>
-                    
+
                     <TextBlock Text="Wypożyczalnia filmów"
                                FontSize="27"
+                               FontWeight="Bold"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                Foreground="#e8a617"
                                Margin="0,30,0,0"
                                FontFamily="Montserrat"/>
-                </StackPanel>
 
+                    <TextBlock Text="Login"
+                               FontSize="27"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="White"
+                               Margin="0,30,0,0"
+                               FontFamily="Montserrat"/>
+                    <TextBox x:Name="textBoxLogin"
+                             FontSize="16"
+                             FontWeight="Medium"
+                             FontFamily="Montserrat"
+                             Background="Transparent"
+                             Foreground="White"
+                             Height="30"
+                             VerticalContentAlignment="Center"
+                             Margin="0,10,0,0"
+                             BorderBrush="DarkGray"
+                             />
+
+                    <TextBlock Text="Hasło"
+                               FontSize="27"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="White"
+                               Margin="0,30,0,0"
+                               FontFamily="Montserrat"/>
+                    <PasswordBox x:Name="textBoxHasło"
+                             FontSize="16"
+                             FontWeight="Medium"
+                             FontFamily="Montserrat"
+                             Background="Transparent"
+                             Foreground="White"
+                             Height="30"
+                             VerticalContentAlignment="Center"
+                             Margin="0,10,0,0"
+                             BorderBrush="DarkGray"
+                             />
+                    <Button x:Name="sendCredentialsButton"
+                            Height="40"
+                            Width="100"
+                            Content="Zaloguj"
+                            FontSize="20"
+                            Foreground="White"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Background="Violet"
+                            Margin="0,30,0,0"
+                            FontFamily="Montserrat"/>
+                    <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center">
+                        <TextBlock Text="Przypomnij hasło"
+                               FontSize="27"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="White"
+                               Margin="0,30,30,0"
+                               FontFamily="Montserrat"/>
+                        <TextBlock Text="Zresetuj"
+                               FontSize="27"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Foreground="White"
+                               Margin="0,30,0,0"
+                               FontFamily="Montserrat"/>
+                    </StackPanel>
+                </StackPanel>
 
             </Grid>
         </Border>
