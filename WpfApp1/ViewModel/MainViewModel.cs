@@ -16,7 +16,13 @@ namespace WpfApp1.ViewModel
         private UserRepo _userRepository;
         private UserModel _userModel;
 
+        private ViewModelBase _currentChildView;
+        private string _caption;
+
+        public ViewModelBase CurrentChildView { get { return _currentChildView; } set { _currentChildView = value; OnPropertyChanged(nameof(CurrentChildView)); } }
+        public string Caption { get { return _caption;} set { _caption = value; OnPropertyChanged(nameof(Caption)); } }
         public UserModel UserModel { get { return _userModel; } set { _userModel = value; OnPropertyChanged(nameof(UserModel)); } }
+
         public MainViewModel() 
         {
             _userRepository = new UserRepo();
@@ -26,20 +32,25 @@ namespace WpfApp1.ViewModel
                 _userModel = _userRepository.GetUserDetails(login);
                 _userModel.Password = string.Empty;
             }
+            ShowMoviesViewCommand = new DelegateCommand(ExecuteShowMoviesViewCommand);
+            ShowClientsViewCommand = new DelegateCommand(ExecuteShowClientsViewCommand);
+
+            ExecuteShowClientsViewCommand(null);
         }
 
-        private DelegateCommand showHomeViewCommand;
-        public ICommand ShowHomeViewCommand => showHomeViewCommand ??= new DelegateCommand(ShowHomeView);
-
-        private void ShowHomeView(object commandParameter)
+        private void ExecuteShowClientsViewCommand(object obj)
         {
+            CurrentChildView = new ClientsViewModel();
+            Caption = "Lista klientów";
         }
 
-        private DelegateCommand showCustomerViewCommand;
-        public ICommand ShowCustomerViewCommand => showCustomerViewCommand ??= new DelegateCommand(ShowCustomerView);
-
-        private void ShowCustomerView(object commandParameter)
+        private void ExecuteShowMoviesViewCommand(object obj)
         {
+            CurrentChildView = new MoviesViewModel();
+            Caption = "Lista filmów";
         }
+
+        public ICommand ShowMoviesViewCommand { get; }
+        public ICommand ShowClientsViewCommand { get;}
     }
 }

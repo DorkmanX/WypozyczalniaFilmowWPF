@@ -19,8 +19,8 @@ namespace WpfApp1
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            DatabaseFacade fascade = new DatabaseFacade(new SQLiteContext());
-            fascade.EnsureCreated();
+            //DatabaseFacade fascade = new DatabaseFacade(new SQLiteContext());
+            //fascade.EnsureCreated();
 
             var loginView = new Login();
             loginView.Show();

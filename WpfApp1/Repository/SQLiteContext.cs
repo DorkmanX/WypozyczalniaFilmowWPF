@@ -12,14 +12,15 @@ namespace WpfApp1.Repository
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=DataFile.db");
+            optionsBuilder.UseSqlite("Data Source=C:\\Users\\user\\Downloads\\WpfApp1\\WpfApp1\\WpfApp1\\bin\\Debug\\net6.0-windows\\DataFile.db");
         }
 
         protected SQLiteContext GetConnection()
         {
-            return new SQLiteContext();
+            return this;
         }
         public DbSet<UserModel> Users { get; set; }
+        public DbSet<ClientModel> Clients { get; set; }
 
 
     }

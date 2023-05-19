@@ -13,18 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApp1
+namespace WpfApp1.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MoviesView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MoviesView : UserControl
     {
-        int licznik = 1;
-        public MainWindow()
+        public MoviesView()
         {
             InitializeComponent();
         }
-
     }
 }

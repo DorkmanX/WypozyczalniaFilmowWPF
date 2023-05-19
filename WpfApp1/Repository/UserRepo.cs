@@ -12,6 +12,7 @@ namespace WpfApp1.Repository
     {
         public bool CheckUser(string login,string password) 
         {
+
             bool valid = false;
             using(var context = GetConnection()) 
             {
