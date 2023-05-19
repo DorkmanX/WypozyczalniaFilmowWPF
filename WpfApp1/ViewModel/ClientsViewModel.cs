@@ -21,6 +21,8 @@ namespace WpfApp1.ViewModel
         private string _adress;
         private string _phoneNumber;
         public ICommand AddClientViewCommand { get; }
+        public ICommand RemoveClientViewCommand { get; }
+        public ICommand EditClientViewCommand { get; }
 
         public int Id { get { return _id; } set { _id = value; OnPropertyChanged(nameof(Id)); } }
         public string Name { get { return _name; } set { _name = value; OnPropertyChanged(nameof(Name)); } }
@@ -35,7 +37,20 @@ namespace WpfApp1.ViewModel
             _clients = new ObservableCollection<ClientModel>();
 
             AddClientViewCommand = new DelegateCommand(ExecuteAddClient);
+            RemoveClientViewCommand = new DelegateCommand(ExecuteRemoveClient);
+            EditClientViewCommand = new DelegateCommand(ExecuteEditClient);
         }
+
+        private void ExecuteEditClient(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ExecuteRemoveClient(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
         private void ExecuteAddClient(object obj)
         {
             ClientModel newClient = new ClientModel()
