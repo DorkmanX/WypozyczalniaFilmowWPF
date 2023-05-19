@@ -22,10 +22,12 @@
                 Background="#200F53"
                 CornerRadius="10" 
                 Padding="10">
-            <DataGrid ColumnWidth="165"
+            <DataGrid
+                  ColumnWidth="165"
                   Background="#200F53"
                   BorderThickness="0"
-                  ItemsSource="{Binding Clients}">
+                  ItemsSource="{Binding Clients}"
+                    SelectedItem="{Binding SelectedClient, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell" >
                         <Setter Property="Background" Value="#19c2bc"/>

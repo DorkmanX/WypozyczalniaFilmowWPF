@@ -14,6 +14,7 @@ namespace WpfApp1.ViewModel
     {
         private IClientInterface _clientContext;
         private ObservableCollection<ClientModel> _clients;
+        private ClientModel _selectedClient;
 
         private int _id;
         private string _name;
@@ -29,7 +30,7 @@ namespace WpfApp1.ViewModel
         public string Surname { get { return _surname; } set { _surname = value; OnPropertyChanged(nameof(Surname)); } }
         public string Adress { get { return _adress; } set { _adress = value; OnPropertyChanged(nameof(Adress)); } }
         public string PhoneNumber { get { return _phoneNumber; } set { _phoneNumber = value; OnPropertyChanged(nameof(PhoneNumber)); } }
-
+        public ClientModel SelectedClient { get { return _selectedClient; } set { _selectedClient = value; OnPropertyChanged(nameof(SelectedClient)); } }
         public ObservableCollection<ClientModel> Clients { get { return _clients; } set { _clients = value; OnPropertyChanged(nameof(Clients)); } }
         public ClientsViewModel()
         {
@@ -39,16 +40,18 @@ namespace WpfApp1.ViewModel
             AddClientViewCommand = new DelegateCommand(ExecuteAddClient);
             RemoveClientViewCommand = new DelegateCommand(ExecuteRemoveClient);
             EditClientViewCommand = new DelegateCommand(ExecuteEditClient);
+            //_clients.Clear();
         }
 
         private void ExecuteEditClient(object obj)
         {
-            throw new NotImplementedException();
+            ClientModel clientEditer = SelectedClient;
+            Console.Write(clientEditer.Name);
         }
 
         private void ExecuteRemoveClient(object obj)
         {
-            throw new NotImplementedException();
+            _clients.Remove(SelectedClient);
         }
 
         private void ExecuteAddClient(object obj)
@@ -61,6 +64,15 @@ namespace WpfApp1.ViewModel
                 Adress = "Dziwna 69",
                 PhoneNumber = "12345",
             };
+            ClientModel newlient = new ClientModel()
+            {
+                Id = 2,
+                Name = "MAasdasdSZ",
+                Surname = "Leasdasdndowski",
+                Adress = "Dziwasdas69",
+                PhoneNumber = "asd345",
+            };
+            _clients.Add(newlient);
             _clients.Add(newClient);
         }
     }
