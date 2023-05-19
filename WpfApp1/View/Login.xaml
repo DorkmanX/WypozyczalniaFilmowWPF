@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.View"
+        xmlns:viewModel="clr-namespace:WpfApp1.ViewModel" 
+        xmlns:custom="clr-namespace:WpfApp1.Custom"
         mc:Ignorable="d"
         Title="Login" Height="650" Width="800"
         WindowStyle = "none"
@@ -12,6 +14,19 @@
         MouseDown="Window_MouseDown"
         Background="Transparent"
         AllowsTransparency="True">
+
+    <Window.DataContext>
+        <viewModel:LoginViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Window.Resources>
+
+    <Window.Visibility>
+        <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
+    </Window.Visibility>
+    
     <Border CornerRadius="50">
         <Border.Background>
             <ImageBrush ImageSource="C:\Users\user\Downloads\WpfApp1\WpfApp1\WpfApp1\Images\background.jpg"/>
@@ -142,7 +157,9 @@
                                Foreground="White"
                                Margin="0,30,0,0"
                                FontFamily="Montserrat"/>
+                    
                     <TextBox x:Name="textBoxLogin"
+                             Text="{Binding Login,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              FontSize="16"
                              FontWeight="Medium"
                              FontFamily="Montserrat"
@@ -161,45 +178,47 @@
                                Foreground="White"
                                Margin="0,30,0,0"
                                FontFamily="Montserrat"/>
-                    <PasswordBox x:Name="textBoxHasło"
-                             FontSize="16"
-                             FontWeight="Medium"
-                             FontFamily="Montserrat"
-                             Background="Transparent"
-                             Foreground="White"
-                             Height="30"
-                             VerticalContentAlignment="Center"
-                             Margin="0,10,0,0"
-                             BorderBrush="DarkGray"
-                             />
-                    <Button x:Name="sendCredentialsButton"
-                            Height="40"
-                            Width="100"
-                            Content="Zaloguj"
-                            FontSize="20"
+
+                    <custom:BindablePasswordBox
+                        Password="{Binding Password,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                        Height="30"
+                        Margin="0,10,0,0">
+
+                    </custom:BindablePasswordBox>
+
+                    <Button x:Name="buttonSend"
+                            BorderThickness="1"
+                            Content="Zaloguj się"
                             Foreground="White"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"
-                            Background="Violet"
-                            Margin="0,30,0,0"
-                            FontFamily="Montserrat"/>
-                    <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center">
-                        <TextBlock Text="Przypomnij hasło"
-                               FontSize="27"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Foreground="White"
-                               Margin="0,30,30,0"
-                               FontFamily="Montserrat"/>
-                        <TextBlock Text="Zresetuj"
-                               FontSize="27"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               Foreground="White"
-                               Margin="0,30,0,0"
-                               FontFamily="Montserrat"/>
-                    </StackPanel>
+                            FontSize="23"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"
+                            Margin="0,40,0,0"
+                            Command="{Binding LoginCommand}">
+                        
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#7f09ba"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#70328f"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Width="160"
+                                        Height="40"
+                                        CornerRadius="9"
+                                        Background="{TemplateBinding Background}">
+                                    <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                 </StackPanel>
 
             </Grid>

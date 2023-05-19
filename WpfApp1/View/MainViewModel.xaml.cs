@@ -26,15 +26,5 @@ namespace WpfApp1
             InitializeComponent();
         }
 
-        private void MoviesBtn_Click(object sender, RoutedEventArgs e)
-        {
-            MoviesPage movies = new MoviesPage();
-            this.Content = movies;
-        }
-
-        private void ClientsBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

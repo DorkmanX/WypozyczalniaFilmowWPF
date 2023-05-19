@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfApp1.Model;
 
 namespace WpfApp1.View
 {
@@ -37,6 +38,24 @@ namespace WpfApp1.View
         private void buttonCloseWindow(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void LoginSuccesfull()
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
+        }
+        private void LoginFailed()
+        {
+            string messageBoxText = "Wprowadziłeś niepoprawne dane";
+            string caption = "Błąd logowania";
+            MessageBoxButton button = MessageBoxButton.OK;
+            MessageBoxImage icon = MessageBoxImage.Error;
+            MessageBoxResult result;
+
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+
         }
     }
 }
