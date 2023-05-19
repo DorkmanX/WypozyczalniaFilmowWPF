@@ -28,7 +28,7 @@ namespace WpfApp1.ViewModel
             ShowMoviesViewCommand = new DelegateCommand(ExecuteShowMoviesViewCommand);
             ShowClientsViewCommand = new DelegateCommand(ExecuteShowClientsViewCommand);
 
-            ExecuteShowClientsViewCommand(null);
+            ExecuteShowMoviesViewCommand(null);
         }
 
         private void ExecuteShowClientsViewCommand(object obj)

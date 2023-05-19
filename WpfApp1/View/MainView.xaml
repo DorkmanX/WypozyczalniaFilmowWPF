@@ -18,12 +18,12 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type viewModel:ClientsViewModel}">
-            <local:ClientsView/>
-        </DataTemplate>
-
         <DataTemplate DataType="{x:Type viewModel:MoviesViewModel}">
             <local:MoviesView/>
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type viewModel:ClientsViewModel}">
+            <local:ClientsView/>
         </DataTemplate>
     </Window.Resources>
 
