@@ -8,7 +8,7 @@ using WpfApp1.View;
 
 namespace WpfApp1.Repository
 {
-    public class UserRepo : SQLiteContext, IUserInterface
+    public class UserRepo : DatabaseContext, IUserInterface
     {
         public bool CheckUser(string login,string password) 
         {

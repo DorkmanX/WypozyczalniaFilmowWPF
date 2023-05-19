@@ -7,7 +7,7 @@ using WpfApp1.Model;
 
 namespace WpfApp1.Repository
 {
-    public class ClientRepo : SQLiteContext,IClientInterface
+    public class ClientRepo : DatabaseContext, IClientInterface
     {
         public List<ClientModel> GetAllClients()
         {
