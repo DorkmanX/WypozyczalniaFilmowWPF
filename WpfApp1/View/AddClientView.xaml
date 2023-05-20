@@ -29,7 +29,7 @@
 
     <Border CornerRadius="50">
         <Border.Background>
-            <ImageBrush ImageSource="C:\Users\user\Downloads\WpfApp1\WpfApp1\WpfApp1\Images\background.jpg"/>
+            <ImageBrush ImageSource="..\Images\background.jpg"/>
         </Border.Background>
         <Border CornerRadius="50"
             Opacity="0.90"

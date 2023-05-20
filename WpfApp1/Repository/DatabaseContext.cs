@@ -14,13 +14,15 @@ namespace WpfApp1.Repository
 
         public virtual DbSet<UserModel> Users { get; set; }
         public virtual DbSet<ClientModel> Clients { get; set; }
+        public virtual DbSet<MovieModel> Movies { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-S4TPVIB;Initial Catalog=MoviesRental;User Id = sa; Password = sql_vwmp034;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                optionsBuilder.UseSqlServer("Server=DELLINSPIRON15;Initial Catalog=MoviesRental;User Id = sa; Password = uibrotho3421;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
                 //FOR LAPTOP "Server=DELLINSPIRON15;Initial Catalog=MoviesRental;User Id = sa; Password = uibrotho3421;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+                //FOR DESKTOP Server=DESKTOP-S4TPVIB;Initial Catalog=MoviesRental;User Id = sa; Password = sql_vwmp034;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
             }
         }
 
@@ -49,6 +51,26 @@ namespace WpfApp1.Repository
                 entity.Property(u => u.Surname).HasColumnName("Surname").IsRequired();
                 entity.Property(u => u.Adress).HasColumnName("Adress");
                 entity.Property(u => u.PhoneNumber).HasColumnName("PhoneNumber");
+            });
+
+            modelBuilder.Entity<MovieModel>(entity =>
+            {
+                entity.ToTable("Movies");
+                entity.HasKey(u => u.Id); //primary key
+
+                //regular properties
+                entity.Property(u => u.Title).HasColumnName("Title").IsRequired();
+                entity.Property(u => u.Description).HasColumnName("Description");
+                entity.Property(u => u.Director).HasColumnName("Director");
+                entity.Property(u => u.TimeLapse).HasColumnName("TimeLapse");
+                entity.Property(u => u.Category).HasColumnName("Category");
+                entity.Property(u => u.IsRented).HasColumnName("IsRented").IsRequired();
+
+                entity.HasOne(x => x.Client)
+                .WithMany(c => c.Movies)
+                .HasForeignKey(x => x.ClientId)
+                .HasConstraintName("FK_Movie_Client")
+                .OnDelete(DeleteBehavior.ClientSetNull);
             });
         }
 

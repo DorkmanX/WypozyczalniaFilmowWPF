@@ -17,5 +17,6 @@ namespace WpfApp1.Model
         public string Surname { get; set; }
         public string Adress { get; set; }
         public string PhoneNumber { get; set; }
+        public virtual ICollection<MovieModel> Movies { get; set; }
     }
 }
