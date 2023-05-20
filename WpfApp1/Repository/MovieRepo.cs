@@ -11,7 +11,12 @@ namespace WpfApp1.Repository
     {
         public int AddMovie(MovieModel movie)
         {
-            throw new NotImplementedException();
+            using (var dbContext = GetConnection())
+            {
+                dbContext.Movies.Add(movie);
+                dbContext.SaveChanges();
+                return movie.Id;
+            }
         }
 
         public bool DeleteMovie(MovieModel movie)

@@ -12,8 +12,8 @@ using WpfApp1.Repository;
 namespace WpfApp1.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230520070104_MoviesMigration")]
-    partial class MoviesMigration
+    [Migration("20230520084957_DatabaseAllowNull")]
+    partial class DatabaseAllowNull
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,8 +72,8 @@ namespace WpfApp1.Migrations
                         .HasColumnName("Category");
 
                     b.Property<int?>("ClientId")
-                        .IsRequired()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ClientId");
 
                     b.Property<string>("Description")
                         .IsRequired()

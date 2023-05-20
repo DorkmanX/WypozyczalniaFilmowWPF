@@ -69,8 +69,8 @@ namespace WpfApp1.Migrations
                         .HasColumnName("Category");
 
                     b.Property<int?>("ClientId")
-                        .IsRequired()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ClientId");
 
                     b.Property<string>("Description")
                         .IsRequired()
