@@ -46,7 +46,9 @@ namespace WpfApp1.ViewModel
         public ICommand InfoMovieViewCommand { get; set; }
         public ICommand InsertMovieViewCommand { get; set; }
         public ICommand CloseInfoViewCommand { get; set; }
-        
+        public ICommand RentApplyViewCommand { get; set; }
+
+
         public MovieView SelectedMovie { get { return _selectedMovie; } set { _selectedMovie = value; OnPropertyChanged(nameof(SelectedMovie)); } }
         public MovieModel SelectedMovieDB { get { return _movieModel; } set { _movieModel = value; OnPropertyChanged(nameof(SelectedMovieDB)); } }
         public ObservableCollection<MovieView> Movies { get { return _movies; } set { _movies = value; OnPropertyChanged(nameof(Movies)); } }
@@ -59,15 +61,38 @@ namespace WpfApp1.ViewModel
             EditMovieViewCommand = new DelegateCommand(ExecuteEditMovie);
             EditApplyViewCommand = new DelegateCommand(ExecuteApplyEditMovie);
             RemoveMovieViewCommand = new DelegateCommand(ExecuteRemoveMovie);
-            RentMovieViewCommand = new DelegateCommand(ExecuteRentMovie);
+            RentMovieViewCommand = new DelegateCommand(ExecuteRentMovie,CanExecuteRentMovie);
             ReturnMovieViewCommand = new DelegateCommand(ExecuteReturnMovie);
             InfoMovieViewCommand = new DelegateCommand(ExecuteInfoMovie);
             InsertMovieViewCommand = new DelegateCommand(ExecuteInsertMovie);
             CloseInfoViewCommand = new DelegateCommand(ExecuteCloseInfo);
+            RentApplyViewCommand = new DelegateCommand(ExecuteApplyRent);
 
             _movies.Clear();
             var databaseMovies = _moviesContext.GetMovies();
             databaseMovies.ForEach(movie => _movies.Add(movie));
+        }
+
+        private bool CanExecuteRentMovie(object obj)
+        {
+            if(SelectedMovie != null)
+            {
+                if (SelectedMovie.IsRented == "Tak")
+                    return false;
+                return true;
+            }
+            return false;
+        }
+
+        private void ExecuteApplyRent(object obj)
+        {
+            if(SelectedMovieDB.ClientId != null)
+                _moviesContext.RentMovie(SelectedMovieDB.Id,(int)SelectedMovieDB.ClientId);
+
+            _movies.Clear();
+            var databaseMovies = _moviesContext.GetMovies();
+            databaseMovies.ForEach(movie => _movies.Add(movie));
+            IsViewVisible = false;
         }
 
         private void ExecuteCloseInfo(object obj)
@@ -118,7 +143,10 @@ namespace WpfApp1.ViewModel
 
         private void ExecuteRentMovie(object obj)
         {
-            throw new NotImplementedException();
+            SelectedMovieDB = _moviesContext.GetMovie(SelectedMovie.Id);
+            RentMovieView newWindow = new RentMovieView();
+            newWindow.DataContext = this;
+            newWindow.Show();
         }
 
         private void ExecuteRemoveMovie(object obj)

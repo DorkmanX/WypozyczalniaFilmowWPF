@@ -12,7 +12,7 @@ namespace WpfApp1.Model
         public MovieModel GetMovie(int id);
         public bool DeleteMovie(int id);
         public bool UpdateMovie(MovieModel movie);
-        public bool RentMovie(MovieModel movie);
+        public bool RentMovie(int id,int clientId);
         public bool ReturnMovie(MovieModel movie);
         public List<MovieView> GetMovies();
     }
