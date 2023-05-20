@@ -105,7 +105,9 @@ namespace WpfApp1.ViewModel
 
         private void ExecuteRemoveMovie(object obj)
         {
-            throw new NotImplementedException();
+            bool deleted = _moviesContext.DeleteMovie(SelectedMovie.Id);
+            if (deleted)
+                _movies.Remove(SelectedMovie);
         }
 
         private void ExecuteEditMovie(object obj)

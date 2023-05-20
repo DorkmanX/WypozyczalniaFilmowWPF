@@ -10,7 +10,7 @@ namespace WpfApp1.Model
     {
         public int AddMovie(MovieModel movie);
         public MovieModel GetMovie(int id);
-        public bool DeleteMovie(MovieModel movie);
+        public bool DeleteMovie(int id);
         public bool UpdateMovie(MovieModel movie);
         public bool RentMovie(MovieModel movie);
         public bool ReturnMovie(MovieModel movie);

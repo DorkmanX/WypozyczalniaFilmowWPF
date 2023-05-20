@@ -27,9 +27,14 @@ namespace WpfApp1.Repository
                 return movie;
             }
         }
-        public bool DeleteMovie(MovieModel movie)
+        public bool DeleteMovie(int id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = GetConnection())
+            {
+                dbContext.Movies.Remove(new MovieModel() { Id = id });
+                dbContext.SaveChanges();
+            }
+            return true;
         }
 
         public bool RentMovie(MovieModel movie)
