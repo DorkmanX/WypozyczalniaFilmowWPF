@@ -17,6 +17,7 @@ namespace WpfApp1.ViewModel
         private ObservableCollection<MovieView> _movies;
         private MovieView _selectedMovie;
         private MovieModel _movieModel;
+
         private bool _isViewVisible;
 
         private int _id;
@@ -44,6 +45,8 @@ namespace WpfApp1.ViewModel
         public ICommand ReturnMovieViewCommand { get; set; }
         public ICommand InfoMovieViewCommand { get; set; }
         public ICommand InsertMovieViewCommand { get; set; }
+        public ICommand CloseInfoViewCommand { get; set; }
+        
         public MovieView SelectedMovie { get { return _selectedMovie; } set { _selectedMovie = value; OnPropertyChanged(nameof(SelectedMovie)); } }
         public MovieModel SelectedMovieDB { get { return _movieModel; } set { _movieModel = value; OnPropertyChanged(nameof(SelectedMovieDB)); } }
         public ObservableCollection<MovieView> Movies { get { return _movies; } set { _movies = value; OnPropertyChanged(nameof(Movies)); } }
@@ -58,11 +61,26 @@ namespace WpfApp1.ViewModel
             RemoveMovieViewCommand = new DelegateCommand(ExecuteRemoveMovie);
             RentMovieViewCommand = new DelegateCommand(ExecuteRentMovie);
             ReturnMovieViewCommand = new DelegateCommand(ExecuteReturnMovie);
+            InfoMovieViewCommand = new DelegateCommand(ExecuteInfoMovie);
             InsertMovieViewCommand = new DelegateCommand(ExecuteInsertMovie);
+            CloseInfoViewCommand = new DelegateCommand(ExecuteCloseInfo);
 
             _movies.Clear();
             var databaseMovies = _moviesContext.GetMovies();
             databaseMovies.ForEach(movie => _movies.Add(movie));
+        }
+
+        private void ExecuteCloseInfo(object obj)
+        {
+            IsViewVisible = false;
+        }
+
+        private void ExecuteInfoMovie(object obj)
+        {
+            SelectedMovieDB = _moviesContext.GetMovie(SelectedMovie.Id);
+            MovieInfoView newWindow = new MovieInfoView();
+            newWindow.DataContext = this;
+            newWindow.Show();
         }
 
         private void ExecuteApplyEditMovie(object obj)
