@@ -17,6 +17,9 @@ namespace WpfApp1.ViewModel
         private MovieModel _selectedMovie;
         private bool _isViewVisible;
 
+        private string _title;
+        private string _description;
+
         public bool IsViewVisible { get => _isViewVisible; set { _isViewVisible = value; OnPropertyChanged(nameof(IsViewVisible)); } }
         public ICommand AddMovieViewCommand { get; }
         public ICommand EditMovieViewCommand { get; }
@@ -30,6 +33,7 @@ namespace WpfApp1.ViewModel
         public MoviesViewModel()
         {
             _movies = new ObservableCollection<MovieView>();
+            _moviesContext = new MovieRepo();
             AddMovieViewCommand = new DelegateCommand(ExecuteAddMovie);
             EditMovieViewCommand = new DelegateCommand(ExecuteEditMovie);
             RemoveMovieViewCommand = new DelegateCommand(ExecuteRemoveMovie);

@@ -65,6 +65,7 @@ namespace WpfApp1.Repository
                 entity.Property(u => u.TimeLapse).HasColumnName("TimeLapse");
                 entity.Property(u => u.Category).HasColumnName("Category");
                 entity.Property(u => u.IsRented).HasColumnName("IsRented").IsRequired();
+                entity.Property(u => u.ClientId).HasColumnName("ClientId");
 
                 entity.HasOne(x => x.Client)
                 .WithMany(c => c.Movies)
