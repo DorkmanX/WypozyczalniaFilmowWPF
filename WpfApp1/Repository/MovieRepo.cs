@@ -44,19 +44,34 @@ namespace WpfApp1.Repository
                 var movie = dbContext.Movies.Where(x => x.Id == id).FirstOrDefault();
                 if (movie.IsRented == false)
                 {
-                    movie.IsRented = true;
-                    movie.ClientId = clientId;
-                    dbContext.SaveChanges();
-                    return true;
+                    try
+                    {
+                        movie.IsRented = true;
+                        movie.ClientId = clientId;
+                        dbContext.SaveChanges();
+                        return true;
+                    }
+                    catch (Exception ex) 
+                    {
+                        return false;
+                    }
                 }
                 else
                     return false;
             }
         }
 
-        public bool ReturnMovie(MovieModel movie)
+        public bool ReturnMovie(int id)
         {
-            throw new NotImplementedException();
+            using (var dbContext = GetConnection())
+            {
+                var movie = dbContext.Movies.Where(x => x.Id == id).FirstOrDefault();
+                movie.IsRented = false;
+                movie.ClientId = null;
+                dbContext.Movies.Update(movie);
+                dbContext.SaveChanges();
+            }
+            return true;
         }
 
         public bool UpdateMovie(MovieModel movie)

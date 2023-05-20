@@ -13,7 +13,7 @@ namespace WpfApp1.Model
         public bool DeleteMovie(int id);
         public bool UpdateMovie(MovieModel movie);
         public bool RentMovie(int id,int clientId);
-        public bool ReturnMovie(MovieModel movie);
+        public bool ReturnMovie(int id);
         public List<MovieView> GetMovies();
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using WpfApp1.Model;
 using WpfApp1.Repository;
@@ -62,7 +63,7 @@ namespace WpfApp1.ViewModel
             EditApplyViewCommand = new DelegateCommand(ExecuteApplyEditMovie);
             RemoveMovieViewCommand = new DelegateCommand(ExecuteRemoveMovie);
             RentMovieViewCommand = new DelegateCommand(ExecuteRentMovie,CanExecuteRentMovie);
-            ReturnMovieViewCommand = new DelegateCommand(ExecuteReturnMovie);
+            ReturnMovieViewCommand = new DelegateCommand(ExecuteReturnMovie,CanExecuteReturnMovie);
             InfoMovieViewCommand = new DelegateCommand(ExecuteInfoMovie);
             InsertMovieViewCommand = new DelegateCommand(ExecuteInsertMovie);
             CloseInfoViewCommand = new DelegateCommand(ExecuteCloseInfo);
@@ -71,6 +72,17 @@ namespace WpfApp1.ViewModel
             _movies.Clear();
             var databaseMovies = _moviesContext.GetMovies();
             databaseMovies.ForEach(movie => _movies.Add(movie));
+        }
+
+        private bool CanExecuteReturnMovie(object obj)
+        {
+            if (SelectedMovie != null)
+            {
+                if (SelectedMovie.IsRented == "Tak")
+                    return true;
+                return false;
+            }
+            return false;
         }
 
         private bool CanExecuteRentMovie(object obj)
@@ -86,13 +98,27 @@ namespace WpfApp1.ViewModel
 
         private void ExecuteApplyRent(object obj)
         {
-            if(SelectedMovieDB.ClientId != null)
-                _moviesContext.RentMovie(SelectedMovieDB.Id,(int)SelectedMovieDB.ClientId);
+            if (SelectedMovieDB.ClientId != null)
+            {
+                bool isRented = _moviesContext.RentMovie(SelectedMovieDB.Id, (int)SelectedMovieDB.ClientId);
+                if(isRented)
+                {
+                    _movies.Clear();
+                    var databaseMovies = _moviesContext.GetMovies();
+                    databaseMovies.ForEach(movie => _movies.Add(movie));
+                    IsViewVisible = false;
+                }
+                else 
+                {
+                    string messageBoxText = "Podany klient nie istnieje";
+                    string caption = "Błąd dodawania";
+                    MessageBoxButton button = MessageBoxButton.OK;
+                    MessageBoxImage icon = MessageBoxImage.Error;
+                    MessageBoxResult result;
 
-            _movies.Clear();
-            var databaseMovies = _moviesContext.GetMovies();
-            databaseMovies.ForEach(movie => _movies.Add(movie));
-            IsViewVisible = false;
+                    result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+                }
+            }
         }
 
         private void ExecuteCloseInfo(object obj)
@@ -138,7 +164,19 @@ namespace WpfApp1.ViewModel
 
         private void ExecuteReturnMovie(object obj)
         {
-            throw new NotImplementedException();
+            _moviesContext.ReturnMovie(SelectedMovie.Id);
+
+            _movies.Clear();
+            var databaseMovies = _moviesContext.GetMovies();
+            databaseMovies.ForEach(movie => _movies.Add(movie));
+
+            string messageBoxText = "Film został zwrócony";
+            string caption = "Zwrot filmu";
+            MessageBoxButton button = MessageBoxButton.OK;
+            MessageBoxImage icon = MessageBoxImage.Information;
+            MessageBoxResult result;
+
+            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
         }
 
         private void ExecuteRentMovie(object obj)
