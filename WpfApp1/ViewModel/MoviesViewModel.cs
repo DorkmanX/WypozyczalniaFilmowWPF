@@ -15,7 +15,8 @@ namespace WpfApp1.ViewModel
     {
         private IMovieInterface _moviesContext;
         private ObservableCollection<MovieView> _movies;
-        private MovieModel _selectedMovie;
+        private MovieView _selectedMovie;
+        private MovieModel _movieModel;
         private bool _isViewVisible;
 
         private int _id;
@@ -37,12 +38,14 @@ namespace WpfApp1.ViewModel
         public bool IsViewVisible { get => _isViewVisible; set { _isViewVisible = value; OnPropertyChanged(nameof(IsViewVisible)); } }
         public ICommand AddMovieViewCommand { get; }
         public ICommand EditMovieViewCommand { get; }
+        public ICommand EditApplyViewCommand { get; }
         public ICommand RemoveMovieViewCommand { get; }
         public ICommand RentMovieViewCommand { get; set; }
         public ICommand ReturnMovieViewCommand { get; set; }
         public ICommand InfoMovieViewCommand { get; set; }
         public ICommand InsertMovieViewCommand { get; set; }
-        public MovieModel SelectedMovie { get { return _selectedMovie; } set { _selectedMovie = value; OnPropertyChanged(nameof(SelectedMovie)); } }
+        public MovieView SelectedMovie { get { return _selectedMovie; } set { _selectedMovie = value; OnPropertyChanged(nameof(SelectedMovie)); } }
+        public MovieModel SelectedMovieDB { get { return _movieModel; } set { _movieModel = value; OnPropertyChanged(nameof(SelectedMovieDB)); } }
         public ObservableCollection<MovieView> Movies { get { return _movies; } set { _movies = value; OnPropertyChanged(nameof(Movies)); } }
 
         public MoviesViewModel()
@@ -51,6 +54,7 @@ namespace WpfApp1.ViewModel
             _moviesContext = new MovieRepo();
             AddMovieViewCommand = new DelegateCommand(ExecuteAddMovie);
             EditMovieViewCommand = new DelegateCommand(ExecuteEditMovie);
+            EditApplyViewCommand = new DelegateCommand(ExecuteApplyEditMovie);
             RemoveMovieViewCommand = new DelegateCommand(ExecuteRemoveMovie);
             RentMovieViewCommand = new DelegateCommand(ExecuteRentMovie);
             ReturnMovieViewCommand = new DelegateCommand(ExecuteReturnMovie);
@@ -59,6 +63,18 @@ namespace WpfApp1.ViewModel
             _movies.Clear();
             var databaseMovies = _moviesContext.GetMovies();
             databaseMovies.ForEach(movie => _movies.Add(movie));
+        }
+
+        private void ExecuteApplyEditMovie(object obj)
+        {
+            bool updated = _moviesContext.UpdateMovie(SelectedMovieDB);
+            if (updated)
+            {
+                _movies.Clear();
+                var databaseMovies = _moviesContext.GetMovies();
+                databaseMovies.ForEach(movie => _movies.Add(movie));
+            }
+            IsViewVisible = false;
         }
 
         private void ExecuteInsertMovie(object obj)
@@ -94,7 +110,10 @@ namespace WpfApp1.ViewModel
 
         private void ExecuteEditMovie(object obj)
         {
-            throw new NotImplementedException();
+            SelectedMovieDB = _moviesContext.GetMovie(SelectedMovie.Id);
+            EditMovieView newWindow = new EditMovieView();
+            newWindow.DataContext = this;
+            newWindow.Show();
         }
 
         private void ExecuteAddMovie(object obj)

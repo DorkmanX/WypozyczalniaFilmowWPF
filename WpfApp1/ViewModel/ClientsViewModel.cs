@@ -65,19 +65,6 @@ namespace WpfApp1.ViewModel
         private void ExecuteUpdateClient(object obj)
         {
             bool updated = _clientContext.UpdateClient(SelectedClient);
-            if(updated) 
-            {
-                foreach(var client in _clients) 
-                {
-                    if(client.Id == SelectedClient.Id)
-                    {
-                        client.Name = SelectedClient.Name;
-                        client.Surname = Surname;
-                        client.Adress = Adress;
-                        client.Surname = Surname;
-                    }
-                }
-            }
             IsViewVisible= false;
         }
 

@@ -19,6 +19,14 @@ namespace WpfApp1.Repository
             }
         }
 
+        public MovieModel GetMovie(int id) 
+        {
+            using (var dbContext = GetConnection())
+            {
+                var movie = dbContext.Movies.Where(x => x.Id == id).FirstOrDefault();
+                return movie;
+            }
+        }
         public bool DeleteMovie(MovieModel movie)
         {
             throw new NotImplementedException();
@@ -36,7 +44,12 @@ namespace WpfApp1.Repository
 
         public bool UpdateMovie(MovieModel movie)
         {
-            throw new NotImplementedException();
+            using (var dbContext = GetConnection())
+            {
+                dbContext.Movies.Update(movie);
+                dbContext.SaveChanges();
+            }
+            return true;
         }
         public List<MovieView> GetMovies() 
         {
