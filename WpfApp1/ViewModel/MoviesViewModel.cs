@@ -158,7 +158,10 @@ namespace WpfApp1.ViewModel
                 ClientId = ClientId == 0 ? null : ClientId
             };
             newModel.Id =_moviesContext.AddMovie(newModel);
-            _movies.Add(Utils.CastToMovieView<MovieModel, MovieView>(newModel));
+            
+            _movies.Clear();
+            var databaseMovies = _moviesContext.GetMovies();
+            databaseMovies.ForEach(movie => _movies.Add(movie));
             IsViewVisible = false;
         }
 
